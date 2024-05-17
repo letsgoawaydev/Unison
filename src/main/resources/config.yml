@@ -1,0 +1,19 @@
+# Java: "java"
+# Bedrock: "bedrock"
+# Bedrock mobile reach: "pocket"
+player-range-type: "bedrock"
+
+# Java: false
+# Bedrock: true
+# Note that existing or world generated armor stands are not affected by this configuration at the moment.
+enable-arms-on-armor-stands: true
+
+# Java: false
+# Bedrock: true
+# Disables pressing F to swap item to offhand.
+disable-offhand-keybind: true
+
+# Java: false
+# Bedrock: true
+# Disables pressing numbers to snap item to hotbar.
+disable-number-key-inventory-hotkey: true
