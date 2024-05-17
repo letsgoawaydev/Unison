@@ -1,0 +1,4 @@
+name: Unison
+version: '${version}'
+main: dev.letsgoaway.unison.Unison
+api-version: '1.20'
