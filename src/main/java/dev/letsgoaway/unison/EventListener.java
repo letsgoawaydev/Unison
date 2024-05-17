@@ -32,12 +32,14 @@ public class EventListener implements Listener {
     public void onInventoryClick(InventoryClickEvent ev) {
         if (ev.getClick().equals(ClickType.SWAP_OFFHAND)) {
             ev.setCancelled(Config.disableOffhandKeybind);
-        }
-        if (ev.getClick().equals(ClickType.SWAP_OFFHAND) && Config.bedrockOffhandItemsOnly) {
-            ev.setCancelled(!bedrockAllowed.contains(Objects.requireNonNull(ev.getCurrentItem()).getType()));
+            return;
         }
         if (ev.getClick().equals(ClickType.NUMBER_KEY)) {
             ev.setCancelled(Config.disableNumberKeyInventoryHotkey);
+            return;
+        }
+        if (ev.getClick().equals(ClickType.SWAP_OFFHAND) && Config.bedrockOffhandItemsOnly) {
+            ev.setCancelled(!bedrockAllowed.contains(Objects.requireNonNull(ev.getCurrentItem()).getType()));
         }
         if (Config.bedrockOffhandItemsOnly && !ev.isCancelled() && ev.getCursor() != null) {
             if (ev.getSlot() == 40 &&
