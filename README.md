@@ -3,7 +3,7 @@ A plugin which allows Java Edition players to have Bedrock Edition features.
 
 If you are looking for a plugin which allows Bedrock Edition players to have Java Edition Features when using Geyser, try [GeyserExtras](https://modrinth.com/plugin/geyserextras).
 
-The plugin does not exist yet but work on it will be started soon.
+The plugin is being worked on.
 
 Some features are best for survival and best for pvp servers who want to match bedrocks mechanics.
 
