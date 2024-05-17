@@ -11,6 +11,8 @@ public class Config {
     public static boolean disableOffhandKeybind = true;
 
     public static boolean disableNumberKeyInventoryHotkey = true;
+
+    public static boolean bedrockOffhandItemsOnly = true;
     static FileConfiguration config;
 
     public static void loadConfig() {
@@ -45,6 +47,9 @@ public class Config {
         if (config.contains("disable-number-key-inventory-hotkey", true)) {
             disableNumberKeyInventoryHotkey = config.getBoolean("disable-number-key-inventory-hotkey");
         }
+        if (config.contains("bedrock-offhand-items-only", true)) {
+            bedrockOffhandItemsOnly = config.getBoolean("bedrock-offhand-items-only");
+        }
     }
 
     public static void saveValues() {
@@ -52,6 +57,7 @@ public class Config {
         config.set("enable-arms-on-armor-stands", enableArmsOnArmorStands);
         config.set("disable-offhand-keybind", disableOffhandKeybind);
         config.set("disable-number-key-inventory-hotkey", disableNumberKeyInventoryHotkey);
+        config.set("bedrock-offhand-items-only", bedrockOffhandItemsOnly);
         try {
             config.save(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
         } catch (IOException e) {

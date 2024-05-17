@@ -17,3 +17,8 @@ disable-offhand-keybind: true
 # Bedrock: true
 # Disables pressing numbers to snap item to hotbar.
 disable-number-key-inventory-hotkey: true
+
+# Java: false
+# Bedrock: true
+# Only allows the items that bedrock allows to be in offhand.
+bedrock-offhand-items-only: true
