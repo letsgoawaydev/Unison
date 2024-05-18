@@ -30,7 +30,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onQuickOffhandSwap(PlayerSwapHandItemsEvent ev) {
-        ev.setCancelled(Config.disableOffhandKeybind || !bedrockAllowed.contains(Objects.requireNonNull(ev.getOffHandItem()).getType()));
+        ev.setCancelled(Config.disableOffhandKeybind || (Config.bedrockOffhandItemsOnly && !bedrockAllowed.contains(Objects.requireNonNull(ev.getOffHandItem()).getType())));
     }
 
     public List<Material> bedrockAllowed = Arrays.asList(Material.SHIELD, Material.ARROW, Material.SPECTRAL_ARROW, Material.TIPPED_ARROW, Material.FIREWORK_ROCKET, Material.TOTEM_OF_UNDYING, Material.FILLED_MAP, Material.NAUTILUS_SHELL, Material.AIR, Material.VOID_AIR, Material.CAVE_AIR);
