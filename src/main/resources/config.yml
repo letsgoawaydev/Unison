@@ -1,6 +1,8 @@
 # Java: "java"
 # Bedrock: "bedrock"
 # Bedrock mobile reach: "pocket"
+# Extends player block interaction reach to match the version specified.
+# Note that changes to the attribute minecraft:player.block_interaction_range will not work when this is set to Bedrock or pocket.
 player-range-type: "bedrock"
 
 # Java: false
@@ -22,3 +24,13 @@ disable-number-key-inventory-hotkey: true
 # Bedrock: true
 # Only allows the items that bedrock allows to be in offhand.
 bedrock-offhand-items-only: true
+
+# Java: false
+# Bedrock: true
+# Changes the totem, enchanted golden apple and (not available yet) suspicious stew effects to match Bedrock editions.
+bedrock-consumable-effects: true
+
+# Java: false
+# Bedrock: true
+# Forces the shield to only be blocked when sneaking.
+allow-block-only-when-sneaking: true

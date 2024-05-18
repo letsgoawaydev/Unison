@@ -1,5 +1,6 @@
 package dev.letsgoaway.unison;
 
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.IOException;
@@ -13,6 +14,9 @@ public class Config {
     public static boolean disableNumberKeyInventoryHotkey = true;
 
     public static boolean bedrockOffhandItemsOnly = true;
+
+    public static boolean bedrockConsumableEffects = true;
+    public static boolean blockWhenSneaking = true;
     static FileConfiguration config;
 
     public static void loadConfig() {
@@ -22,6 +26,12 @@ public class Config {
         config = Unison.plugin.getConfig();
         loadValues();
         Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile().delete();
+        Unison.plugin.saveResource("config.yml", false);
+        try {
+            Unison.plugin.getConfig().load(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
+        } catch (IOException | InvalidConfigurationException e) {
+
+        }
         saveValues();
     }
 
@@ -50,6 +60,12 @@ public class Config {
         if (config.contains("bedrock-offhand-items-only", true)) {
             bedrockOffhandItemsOnly = config.getBoolean("bedrock-offhand-items-only");
         }
+        if (config.contains("bedrock-consumable-effects", true)) {
+            bedrockConsumableEffects = config.getBoolean("bedrock-consumable-effects");
+        }
+        if (config.contains("allow-block-only-when-sneaking", true)) {
+            blockWhenSneaking = config.getBoolean("allow-block-only-when-sneaking");
+        }
     }
 
     public static void saveValues() {
@@ -58,6 +74,8 @@ public class Config {
         config.set("disable-offhand-keybind", disableOffhandKeybind);
         config.set("disable-number-key-inventory-hotkey", disableNumberKeyInventoryHotkey);
         config.set("bedrock-offhand-items-only", bedrockOffhandItemsOnly);
+        config.set("bedrock-consumable-effects", bedrockConsumableEffects);
+        config.set("allow-block-only-when-sneaking", blockWhenSneaking);
         try {
             config.save(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
         } catch (IOException e) {
