@@ -1,4 +1,4 @@
 name: Unison
-version: '1.20.6-v1.0.0'
+version: '1.21.0-v1.0.0'
 main: dev.letsgoaway.unison.Unison
-api-version: '1.20'
+api-version: '1.21'
