@@ -23,15 +23,16 @@ public class Config {
         if (!Unison.plugin.getDataFolder().exists() || !Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile().exists()) {
             Unison.plugin.saveResource("config.yml", false);
         }
+
         config = Unison.plugin.getConfig();
-        loadValues();
-        Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile().delete();
-        Unison.plugin.saveResource("config.yml", false);
         try {
-            Unison.plugin.getConfig().load(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
+            config.load(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
         } catch (IOException | InvalidConfigurationException e) {
 
         }
+        loadValues();
+        Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile().delete();
+        Unison.plugin.saveResource("config.yml", false);
         saveValues();
     }
 

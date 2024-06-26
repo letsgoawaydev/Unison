@@ -2,3 +2,15 @@ name: Unison
 version: '1.21.0-v1.0.0'
 main: dev.letsgoaway.unison.Unison
 api-version: '1.21'
+commands:
+  unison:
+    description: Unison
+    usage: /<command>
+    permission: unison.command
+permissions:
+  unison.reload:
+    description: Allow reloading the Unison plugin.
+    default: op
+  unison.command:
+    description: Allow using the Unison plugins command.
+    default: op

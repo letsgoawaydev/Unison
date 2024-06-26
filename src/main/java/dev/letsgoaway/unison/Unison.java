@@ -15,6 +15,7 @@ public final class Unison extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EventListener(), this);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::update, 0L, 0L);
         Config.loadConfig();
+        getCommand("unison").setExecutor(new UnisonCommand());
     }
 
     public void update() {
