@@ -14,6 +14,6 @@ Some features are best for survival and best for pvp servers who want to match b
 - Bedrock Potion effect differences of Golden Apple, Totem of Undying
 - Bedrock edition offhand mechanics
 
-# Plans
+## Plans
 - Suspicious stew bedrock effects have not been added yet.
 - Disable Player Collisions
