@@ -7,7 +7,7 @@ The plugin is being worked on.
 
 Some features are best for survival and best for pvp servers who want to match bedrocks mechanics.
 
-## Added (All are toggleable)
+## Added (All are configurable)
 - Arm's on armor stands
 - Position and Days played UI using scoreboard
 - 5.0 instead of 4.5 block interaction range reach for all players, with an option to choose mobile bedrock edition's 6 block reach in survival and 12 block reach in creative
