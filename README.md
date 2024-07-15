@@ -17,3 +17,5 @@ Some features are best for survival and best for pvp servers who want to match b
 ## Plans
 - Suspicious stew bedrock effects have not been added yet.
 - Disable Player Collisions
+- Allow players to toggle days played and position ui as they please.
+- If you are using geyser, hide the position scoreboard ui if you have it enabled.
