@@ -1,7 +1,10 @@
 package dev.letsgoaway.unison;
 
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scoreboard.*;
 
 import java.util.Objects;
@@ -13,34 +16,112 @@ public class UnisonPlayer {
     public Objective objective;
     public Scoreboard scoreboard;
     public Score secondbar;
+    public boolean showCoordinates = true;
+
+    public boolean showDaysPlayed = true;
 
     public UnisonPlayer(Player player) {
         this.player = player;
         this.uuid = player.getUniqueId();
+        if (hasData("coordinates"))
+            setShowCoordinates(Config.allowTogglingCoords ? getData("coordinates", PersistentDataType.BOOLEAN) : Config.showCoordinates, true);
+        else
+            setShowCoordinates(Config.showCoordinates, true);
+
+        if (hasData("daysplayed"))
+            setShowDaysPlayed(Config.allowTogglingDays ? getData("daysplayed", PersistentDataType.BOOLEAN) : Config.showDaysPlayed, true);
+        else
+            setShowDaysPlayed(Config.showDaysPlayed, true);
+
         createSB();
+    }
+
+    public static UnisonPlayer get(Player player) {
+        return EventListener.players.get(player.getUniqueId());
     }
 
     public void tick() {
         updateBedrockStyleDisplays();
     }
 
+    public void setShowCoordinates(boolean showCoordinates) {
+        setShowCoordinates(showCoordinates, false);
+    }
+
+    public void setShowCoordinates(boolean showCoordinates, boolean force) {
+        if (Config.allowTogglingCoords || force) {
+            this.showCoordinates = showCoordinates;
+            setData("coordinates", PersistentDataType.BOOLEAN, showCoordinates);
+        } else {
+            player.sendMessage("Toggling the Bedrock Coordinates UI is disabled on this server!");
+        }
+    }
+
+    public void setShowDaysPlayed(boolean daysPlayed) {
+        setShowDaysPlayed(daysPlayed, false);
+    }
+
+    public void setShowDaysPlayed(boolean showDaysPlayed, boolean force) {
+        if (Config.allowTogglingDays || force) {
+            this.showDaysPlayed = showDaysPlayed;
+            setData("daysplayed", PersistentDataType.BOOLEAN, showDaysPlayed);
+        } else {
+            player.sendMessage("Toggling the Bedrock Days Played UI is disabled on this server!");
+        }
+    }
+
     public void updateBedrockStyleDisplays() {
-        if (Config.showCoordinates && Config.showDaysPlayed) {
-            setTopSBBar("Position: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
-            setSecondBar("Days played:", Unison.dayCount);
+        boolean coordsCanDisplay = Config.allowTogglingCoords ? this.showCoordinates : Config.showCoordinates;
+        boolean daysCanDisplay = Config.allowTogglingDays ? this.showDaysPlayed : Config.showDaysPlayed;
+        if (coordsCanDisplay && daysCanDisplay) {
+            // Handled in PlayPacketSendListener
+            setTopSBBar(getPositionText());
+            // We replace this with nothing because it gets formatted in PlayPacketSendListener
+            setSecondBar("unison:days", 0);
             return;
         }
-        if (Config.showCoordinates && !Config.showDaysPlayed) {
-            setTopSBBar("Position: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ());
+        if (coordsCanDisplay && !daysCanDisplay) {
+            setTopSBBar(getPositionText());
             setSecondBar("", 0);
+            scoreboard.resetScores("");
             return;
         }
-        if (!Config.showCoordinates && Config.showDaysPlayed) {
-            setTopSBBar("Days played: " + Unison.dayCount);
+        if (!coordsCanDisplay && daysCanDisplay) {
+            setTopSBBar(getDaysText());
             setSecondBar("", 0);
+            scoreboard.resetScores("");
             return;
         }
         hideSB();
+    }
+
+    public PersistentDataContainer playerSaveData() {
+        return player.getPersistentDataContainer();
+    }
+
+    public boolean hasData(String key) {
+        try {
+            return playerSaveData().has(NamespacedKey.fromString(key, Unison.plugin));
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    public <P, C> void setData(String key, PersistentDataType<P, C> type, C value) {
+        playerSaveData().set(NamespacedKey.fromString(key, Unison.plugin), type, value);
+    }
+
+
+    public <P, C> C getData(String key, PersistentDataType<P, C> type) {
+        return playerSaveData().get(NamespacedKey.fromString(key, Unison.plugin), type);
+    }
+
+    public String getPositionText() {
+        return "Position: " + player.getLocation().getBlockX() + ", " + player.getLocation().getBlockY() + ", " + player.getLocation().getBlockZ();
+    }
+
+    public static String getDaysText() {
+        return "Days played: " + Unison.dayCount;
     }
 
     public void createSB() {
@@ -74,13 +155,15 @@ public class UnisonPlayer {
         objective.setDisplayName(s);
     }
 
+    String lastSecondBar = "";
 
     public void setSecondBar(String s, int amount) {
+        scoreboard.resetScores(lastSecondBar);
         if (s.isEmpty()) {
-            scoreboard.resetScores("Days played:");
             return;
         }
         secondbar = objective.getScore(s);
         secondbar.setScore(amount);
+        lastSecondBar = s;
     }
 }

@@ -2,11 +2,28 @@ name: Unison
 version: '1.21.0-v1.0.0'
 main: dev.letsgoaway.unison.Unison
 api-version: '1.21'
+depend:
+  - packetevents
 commands:
   unison:
     description: Unison
     usage: /<command>
     permission: unison.command
+  coords:
+    description: Allows players to toggle the coordinates UI.
+    usage: /<command>
+    permission: unison.coords
+    aliases:
+      - position
+      - pos
+      - xyz
+  days:
+    description: Allows players to toggle the day counter UI.
+    usage: /<command>
+    permission: unison.days
+    aliases:
+      - daysplayed
+      - daycounter
 permissions:
   unison.reload:
     description: Allow reloading the Unison plugin.
@@ -14,3 +31,9 @@ permissions:
   unison.command:
     description: Allow using the Unison plugins command.
     default: op
+  unison.coords:
+    description: Allows players to toggle the coordinates UI.
+    default: true
+  unison.days:
+    description:  Allows players to toggle the day counter UI.
+    default: true

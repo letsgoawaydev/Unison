@@ -38,5 +38,11 @@ allow-block-only-when-sneaking: true
 # Mimics the bedrock coordinates UI by using scoreboard.
 show-coordinates: true
 
-# Mimics the bedrock day counter UI by using scoreboard.
+# Allows players to toggle coordinates by using /coords
+allow-toggling-coordinates: true
+
+# Mimics the bedrock day played UI by using scoreboard.
 show-days-played: true
+
+# Allows players to toggle the days played UI by using /coords
+allow-toggling-days-played: true

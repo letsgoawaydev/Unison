@@ -19,7 +19,9 @@ public class Config {
     public static boolean blockWhenSneaking = true;
 
     public static boolean showCoordinates = true;
+    public static boolean allowTogglingCoords = true;
     public static boolean showDaysPlayed = true;
+    public static boolean allowTogglingDays = true;
     static FileConfiguration config;
 
     public static void loadConfig() {
@@ -73,8 +75,14 @@ public class Config {
         if (config.contains("show-coordinates", true)) {
             showCoordinates = config.getBoolean("show-coordinates");
         }
+        if (config.contains("allow-toggling-coordinates", true)) {
+            allowTogglingCoords = config.getBoolean("allow-toggling-coordinates");
+        }
         if (config.contains("show-days-played", true)) {
             showDaysPlayed = config.getBoolean("show-days-played");
+        }
+        if (config.contains("allow-toggling-days-played", true)) {
+            allowTogglingDays = config.getBoolean("allow-toggling-days-played");
         }
     }
 
@@ -87,7 +95,9 @@ public class Config {
         config.set("bedrock-consumable-effects", bedrockConsumableEffects);
         config.set("allow-block-only-when-sneaking", blockWhenSneaking);
         config.set("show-coordinates", showCoordinates);
+        config.set("allow-toggling-coordinates", allowTogglingCoords);
         config.set("show-days-played", showDaysPlayed);
+        config.set("allow-toggling-days-played", allowTogglingDays);
         try {
             config.save(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
         } catch (IOException e) {

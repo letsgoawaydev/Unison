@@ -1,5 +1,9 @@
 package dev.letsgoaway.unison;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import dev.letsgoaway.unison.listeners.packet.send.PlayPacketSendListener;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -16,10 +20,23 @@ public final class Unison extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().load();
+        PacketEvents.getAPI().getSettings().reEncodeByDefault(false)
+                .checkForUpdates(false);
+        PacketEvents.getAPI().init();
+        PacketEvents.getAPI().getEventManager().registerListener(new PlayPacketSendListener(),
+                PacketListenerPriority.LOW);
         Bukkit.getPluginManager().registerEvents(new EventListener(), this);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::update, 0L, 0L);
         Config.loadConfig();
         getCommand("unison").setExecutor(new UnisonCommand());
+        getCommand("unison").setTabCompleter(new UnisonCommand());
+        getCommand("coords").setExecutor(new CoordsCommand());
+        getCommand("days").setExecutor(new DaysCommand());
+    }
+    @Override
+    public void onLoad() {
     }
 
     public void updateReach(Player player) {
