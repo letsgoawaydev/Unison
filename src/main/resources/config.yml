@@ -34,3 +34,9 @@ bedrock-consumable-effects: true
 # Bedrock: true
 # Forces the shield to only be blocked when sneaking.
 allow-block-only-when-sneaking: true
+
+# Mimics the bedrock coordinates UI by using scoreboard.
+show-coordinates: true
+
+# Mimics the bedrock day counter UI by using scoreboard.
+show-days-played: true

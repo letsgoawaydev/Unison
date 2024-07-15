@@ -17,6 +17,9 @@ public class Config {
 
     public static boolean bedrockConsumableEffects = true;
     public static boolean blockWhenSneaking = true;
+
+    public static boolean showCoordinates = true;
+    public static boolean showDaysPlayed = true;
     static FileConfiguration config;
 
     public static void loadConfig() {
@@ -67,6 +70,12 @@ public class Config {
         if (config.contains("allow-block-only-when-sneaking", true)) {
             blockWhenSneaking = config.getBoolean("allow-block-only-when-sneaking");
         }
+        if (config.contains("show-coordinates", true)) {
+            showCoordinates = config.getBoolean("show-coordinates");
+        }
+        if (config.contains("show-days-played", true)) {
+            showDaysPlayed = config.getBoolean("show-days-played");
+        }
     }
 
     public static void saveValues() {
@@ -77,6 +86,8 @@ public class Config {
         config.set("bedrock-offhand-items-only", bedrockOffhandItemsOnly);
         config.set("bedrock-consumable-effects", bedrockConsumableEffects);
         config.set("allow-block-only-when-sneaking", blockWhenSneaking);
+        config.set("show-coordinates", showCoordinates);
+        config.set("show-days-played", showDaysPlayed);
         try {
             config.save(Unison.plugin.getDataFolder().toPath().resolve("config.yml").toFile());
         } catch (IOException e) {

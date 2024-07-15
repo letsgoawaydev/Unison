@@ -15,11 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.*;
 
 import java.util.*;
 
 public class EventListener implements Listener {
     private HashMap<UUID, Material> lastEaten = new HashMap<>();
+    public static HashMap<UUID, UnisonPlayer> players = new HashMap<>();
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent ev) {
@@ -127,13 +129,19 @@ public class EventListener implements Listener {
 
     private void disconnect(UUID player) {
         lastEaten.remove(player);
+        players.remove(player);
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent ev) {
         disconnect(ev.getPlayer().getUniqueId());
     }
-
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent ev) {
+        Player player = ev.getPlayer();
+        UnisonPlayer unisonPlayer = new UnisonPlayer(ev.getPlayer());
+        players.put(unisonPlayer.uuid, unisonPlayer);
+    }
     @EventHandler
     public void onPlayerKick(PlayerKickEvent ev) {
         disconnect(ev.getPlayer().getUniqueId());
